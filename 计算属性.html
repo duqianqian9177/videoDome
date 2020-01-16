@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>vue计算属性</title>
+		<style>
+			.app{
+				width: 200px;
+				height: 300px;
+				margin: 100px auto;
+			}
+			.title-all{
+				font-size: 16px;
+				color:mediumblue;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			<!--计算属性和方法是一样的效果-->
+			{{fullName}}
+			{{age}}
+			
+			{{mFullName()}}
+			
+			{{wFullName}}
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			//vue的生命周期就是：vue的实例在某一个时间段会自己执行的函数
+			let vm = new Vue({
+				el: "#app",
+				// template:'<div>hello world</div>',
+				data: {
+					firstName:"Dell",
+					lastName:"Lee",
+					age:28,
+					wFullName:"data dell lee"
+				},
+				//计算属性
+				computed:{
+					//计算属性比较省性能，因为他有缓存的机制，如果他依赖的变量[firstName / lastName ]没有发生变化，他就不会重新计算
+					fullName:function(){
+						console.info('计算了一次');
+						return this.firstName +' ' + this.lastName
+					}
+				},
+				//方法
+				methods: {
+					//methods方法相对于计算属性比较耗性能，他没有缓存机制，页面刷新就会计算一次
+					mFullName:function(){
+						console.info('计算了一次');
+						return this.firstName +' ' + this.lastName
+					}
+				},
+				watch:{
+					//watch也比较省性能，他也有缓存的机制，如果他依赖的变量[firstName / lastName ]没有发生变化，他就不会重新计算
+					firstName:function(){
+						console.info('计算了一次');
+						this.wFullName = this.firstName + this.lastName;
+					},
+					lastName:function(){
+						console.info('计算了一次');
+						this.wFullName = this.firstName + this.lastName;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

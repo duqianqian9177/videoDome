@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>refs</title>
+		<style>
+			.actived{
+				color: orangered;
+				font-size: 14;
+			}
+			.activedTwo{
+				font-size: 14;
+				color: #0000CD;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			<!-- 1.在ul ol select table类似于这些组合使用template模版的时候，h5解析结构时，会出现bug,正确的解决方案是使用is,
+					<li is='counter'></li>
+					这句话的解析是：把li使用counter组件的结构替换掉
+			 -->
+			
+			<!-- <ul>
+				<li is='counter'></li>
+			</ul> -->
+			
+			<!-- 
+				3.页面上使用ref,是被用来给元素或子组件注册引用信息
+				例如 this.$refs.one.number 
+			 -->
+			<counter @change='handleChange' ref='one'></counter>
+			<counter @change='handleChange' ref='two'></counter>
+			<div>{{total}}</div>
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			Vue.component('counter',{
+				// template:'<li>this is li</li>',
+				template:'<div @click="handleClick">{{number}}</div>',
+				//2.子组件里定义data,data必须是函数，跟组件里的data可以是对象
+				data:function(){
+					return {
+						number:0
+					}
+				},
+				methods:{
+					handleClick:function(){
+						this.number ++;
+						this.$emit('change');
+					}
+					
+				}
+					
+			})
+			let vm = new Vue({
+				el: "#app",
+				data:{
+					total:0
+				},
+				methods:{
+					handleChange:function(){
+						console.info(this.$refs.one)
+						this.total = this.$refs.one.number + this.$refs.two.number
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

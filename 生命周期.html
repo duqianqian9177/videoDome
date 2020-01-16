@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>vue实例</title>
+		<style>
+			.app{
+				width: 200px;
+				height: 300px;
+				margin: 100px auto;
+			}
+			.title-all{
+				font-size: 16px;
+				color:mediumblue;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			//vue的生命周期就是：vue的实例在某一个时间段会自己执行的函数
+			let vm = new Vue({
+				el: "#app",
+				template:'<div>hello world</div>',
+				data: {
+					message:"hello world"
+				},
+				beforeCreate:function(){
+					console.info('beforeCreate');
+				},
+				created:function(){
+					console.info('created')
+				},
+				//页面上如果有template模版,则vue会解析模版里的内容显示到页面上，如果没有，则会把结构里的内容解析显示在页面上
+				//但是在解析后在页面渲染之前，使用的是beforeMount周期函数，也就是页面和数据想结合，在即将挂在的一瞬间执行的beforeMount
+				beforeMount:function(){
+					console.info('beforeMount');
+					console.info(this.$el);
+				},
+				
+				//在页面挂在之后，自动执行mounted函数
+				mounted:function(){
+					console.info('-----------');
+					console.info('mounted')
+					console.info(this.$el);
+				},
+				beforeDestroy:function(){
+					//实例销毁
+					console.info('beforeDestroy')
+				},
+				destoryed:function(){
+					//实例被销毁
+					console.info('destoryed')
+				},
+				//以下两个生命周期函数是在数据变化的时候重新渲染并更新应用
+				beforeUpdate:function(){
+					console.info('beforeUpdate')
+				},
+				updated:function(){
+					console.info('updated')
+				}
+				// methods: {
+				// 	// console.info('methods')
+				// },
+			})
+		</script>
+	</body>
+</html>

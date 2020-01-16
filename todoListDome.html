@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>todoList</title>
+		<style>
+			.app{
+				width: 200px;
+				height: 300px;
+				margin: 100px auto;
+			}
+			.title-all{
+				font-size: 16px;
+				color:mediumblue;
+			}
+			input{
+				 border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			https://www.kancloud.cn/lojze/lojze/386903
+			<h4 class="title-all">父子传值(局部组件)</h4>
+			<input type="text" placeholder="请输入内容" v-model='inputVal' id='input'>
+			<button type="button" @click='clickfn'>提交</button>
+			<ul>
+				<!-- <li v-for='item in lists'>{{item}}</li> -->
+				<todo-item :content='item' 
+						   :index = 'index'
+						   @deleteitem='delectitemFn'
+						   v-for = '(item,index) in lists'></todo-item>
+			</ul>
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			let TodoItem = {
+				props:['content','index'],
+				// template:"<li>{{item}}</li>"   //item输出为空 ，为什么
+				template:"<li @click='itemclick'>{{content}}</li>",
+				methods:{
+					itemclick:function(){
+						 //子组件传递给父组件的使用$emit监听
+						this.$emit('deleteitem',this.index);  
+					},
+				}
+			}
+			let app = new Vue({
+				el: "#app",
+				data: {
+					lists: [],
+					inputVal: ''
+				},
+				components:{
+					TodoItem
+				},
+				methods: {
+					clickfn: function() {
+						//添加数据
+						this.lists.push(this.inputVal);
+						this.inputVal = ''
+					},
+					
+					delectitemFn: function(index) {
+						//添加数据
+						this.lists.splice(index,1);
+						console.info(this.lists)
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

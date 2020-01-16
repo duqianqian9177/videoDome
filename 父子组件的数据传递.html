@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>父子组件的数据传递</title>
+		<style>
+			.actived{
+				color: orangered;
+				font-size: 14;
+			}
+			.activedTwo{
+				font-size: 14;
+				color: #0000CD;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 
+				父组件通过属性的形式向自组件进行传值，子组件通过事件出发的形式向父组件进行传值 ，
+			而且在传值的过程中，有一个隐性的规定：就是单向数据流，父组件可以向子组件传递任何的数据，但是子组件不能改变父组件传递过来的数据
+		-->
+		<div id="app" class="app">
+			<counter :count='0' ref='one' @inc='handleIncRease'></counter>
+			<counter :count='1' ref='two' @inc='handleIncRease'></counter>
+			
+			<div>{{total}}</div>
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			// vue里有个单向数据流的概念，自组件不能修改父组件传递过来的参数
+			var counter = {
+				//子组件接手父组件传递过来的count
+				props:['count'],
+				data:function(){
+					return	{
+						number : this.count
+					}
+				},
+				template :'<div @click="handleClick">{{number}}</div>',
+				methods:{
+					handleClick:function(){
+						this.number ++;
+						this.$emit('inc',2)//步长为2
+					}
+				}
+			}
+			let vm = new Vue({
+				el: "#app",
+				data:{
+					total:1
+				},
+				components:{
+					counter
+				},
+				methods:{
+					// totalall:function(){
+						// this.total = this.$refs.one.number+this.$refs.two.number
+					// },
+					handleIncRease:function(step){
+						this.total += step;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

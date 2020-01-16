@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>列表渲染</title>
+		<style>
+			.actived{
+				color: orangered;
+				font-size: 14;
+			}
+			.activedTwo{
+				font-size: 14;
+				color: #0000CD;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			<strong>数组循环</strong>
+			<!-- 第一种方法 -->
+			<div v-for='(item,index) in list'>{{item}} ---- {{index}}</div>
+			<div>下边是 for of </div>
+			<div v-for='(item,index) of list'>{{item}} ---- {{index}}</div>
+			<!-- 第二种方法 -->
+			<!-- 这里不建议用index作为唯一的key值，index比较耗性能，。所以建议用别的唯一的标示 -->
+			<div v-for='(item,index) of lists' :key='item.id'>
+				{{item.text}} --- {{index}}
+			</div>
+			
+			<!-- 第三种方法 -->
+			<!-- 　template的作用是模板占位符，可帮助我们包裹元素，但在循环过程当中，template不会被渲染到页面上-->
+			<template v-for='(item,index) of lists' :key='item.id'>
+				<div>
+					{{item.text}} --- {{index}}
+				</div>
+				<span>{{item.text}} --- {{index}}</span>
+			</template> 
+		
+			<strong>对象循环</strong>
+			<div v-for='(item,key,index) of userInfo'>
+				{{key}} -- {{item}} -- {{index}} 
+			</div>
+				
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			
+			let vm = new Vue({
+				el: "#app",
+				data: {
+					list:[
+						'第一课',
+						'第二课',
+						'第三课',
+						'第四课',
+						'第五课',
+						'第六课'
+					],
+					lists:[
+						{'id':'001',text:'lists1'},
+						{'id':'002',text:'lists2'},
+						{'id':'003',text:'lists3'}
+					],
+					//可以通过vue.set方法给对象添加数据
+					userInfo:{
+						name:'dell',
+						age:'28',
+						gender:'male',
+						salary:'secret'
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

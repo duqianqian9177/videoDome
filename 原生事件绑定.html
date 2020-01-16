@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>原生事件绑定</title>
+		
+	</head>
+	<body>
+		
+		<div id="app">
+			<!-- 第一种方法，较麻烦 -->
+			<child @click='handleClick' ></child>
+				<!-- 第二种方法，通过.native -->
+			<!-- .native直接给子组件绑定原生事件 -->
+			<child @click.native='handleClick' ></child>
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			Vue.component('child',{
+				template:'<div @click="handleChildClick">child</div>',
+				methods:{
+					handleChildClick(){
+						this.$emit('click');
+					}
+				}
+			})
+			let vm = new Vue({
+				el: "#app",
+				methods:{
+					handleClick(){
+						alert('handleClick')
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

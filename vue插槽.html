@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>vue插槽</title>
+	</head>
+	<body>
+		<div id="app">
+			<body-content>
+				<!-- 可以使用具名插槽,也就是在元素上加上slot='name' 在子元素中的slot里加上name属性，用于给插槽匹配相对应的内容 -->
+					<!-- 这里注释，是为了体现出下边slot的默认值 -->
+				<!-- <div class="header" slot='header'></div> -->
+				<div class="footer" slot='footer'>footer</div>
+			</body-content>
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			//什么是插槽？
+				//插槽（Slot）是Vue提出来的一个概念，插槽用于决定将所携带的内容，插入到指定的某个位置，从而使模板分块，
+						// 具有模块化的特质和更大的重用性。
+				//插槽显不显示、怎样显示是由父组件来控制的，而插槽在哪里显示就由子组件来进行控制
+				
+			Vue.component('body-content',{
+				//插槽还可以设置默认内容例如：<solt>我是默认内容</solt>
+				template:`<div>
+							<slot name='header'><div class="header" >我是默认内容</div></slot>
+							<div class='content'>content</div>
+							<slot name='footer'></slot>
+						</div>`
+			})
+			let vm = new Vue({
+				el: "#app"
+			})
+		</script>
+	</body>
+</html>

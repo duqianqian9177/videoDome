@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>vue实例</title>
+		<style>
+			.app{
+				width: 200px;
+				height: 300px;
+				margin: 100px auto;
+			}
+			.title-all{
+				font-size: 16px;
+				color:mediumblue;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			<div @click='handleClick'>
+				{{message}}
+			</div>
+			<item></item>
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			 Vue.component('item',{
+				template:"<div>Vue是由一个个实例构建而成的，一个组件就是一个Vue的实例，每个组件内部都可以写属性，因此每一个组件都是一个Vue的实例。</div>"
+			})
+			let vm = new Vue({
+				el: "#app",
+				data: {
+					message:"hello world"
+				},
+				methods: {
+					handleClick: function() {
+						//添加数据
+						alert('hello');
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

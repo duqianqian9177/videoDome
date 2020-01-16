@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>style绑定</title>
+		<style>
+			.actived{
+				color: orangered;
+				font-size: 14;
+			}
+			.activedTwo{
+				font-size: 14;
+				color: #0000CD;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			<!--第一种方式-->
+			<div @click ='addClass'
+				 :class = '{actived:isActive}'>
+				red</div>
+			<!--第二种方式-->	
+			<div @click ='addClassTwo'
+				 :class = '[activedTwo,activedTwos]'>
+				blue</div>
+			<!--第三种方式-->
+			<div  @click ='addClassTreen' 
+				  :style = 'styleObj'>
+					yellow</div>
+			<!--第四种方式-->
+			<div  @click ='addClassFour' 
+				  :style = '[styleObjFour,{fontSize:"20px"}]'>
+					yellow</div>
+			
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			//vue的生命周期就是：vue的实例在某一个时间段会自己执行的函数
+			let vm = new Vue({
+				el: "#app",
+				data: {
+					isActive:false,
+					activedTwo:'',
+					activedTwos:'activedTwo-s',
+					styleObj:{
+						color:'black'
+					},
+					styleObjFour:{
+						color:'black'
+					}
+					
+				},
+				methods: {
+					//第一种方式
+					addClass:function() {
+						this.isActive = !this.isActive;
+					},
+					//第二张方式
+					addClassTwo:function() {
+						this.activedTwo = this.activedTwo === 'activedTwo' ?
+											"" :'activedTwo'
+					},
+					//第三种方式
+					addClassTreen:function() {
+						this.styleObj.color = this.styleObj.color === 'black' ?
+											"yellowgreen" :'black'
+					},
+					//第四种方式
+					addClassFour:function() {
+						this.styleObjFour.color = this.styleObjFour.color === 'black' ?
+											"orange" :'black'
+					}
+				},
+			})
+		</script>
+	</body>
+</html>

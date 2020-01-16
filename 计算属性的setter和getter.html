@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>getter和setter</title>
+		<style>
+			.app{
+				width: 200px;
+				height: 300px;
+				margin: 100px auto;
+			}
+			.title-all{
+				font-size: 16px;
+				color:mediumblue;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			
+			{{fullName}}
+			
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+			//vue的生命周期就是：vue的实例在某一个时间段会自己执行的函数
+			let vm = new Vue({
+				el: "#app",
+				// template:'<div>hello world</div>',
+				data: {
+					firstName:"Dell",
+					lastName:"Lee",
+					age:28,
+					wFullName:"data dell lee"
+				},
+				//计算属性
+				computed:{
+					//计算属性比较省性能，因为他有缓存的机制，如果他依赖的变量[firstName / lastName ]没有发生变化，他就不会重新计算
+					// fullName:function(){
+					// 	console.info('计算了一次');
+					// 	return this.firstName + ' ' + this.lastName
+					// }
+					fullName:{
+						//get 获取属性值 ，set监听属性值的变化
+						get:function(){//回调函数 当需要读取当前属性值是执行，根据相关数据计算并返回当前属性的值
+							return this.firstName + ' ' + this.lastName
+						},
+						set:function(value){////监视当前属性值的变化，当属性值发生变化时执行，更新相关的属性数据
+							//这里的value 的值是修改后的值
+							console.info(value);
+							var arr = value.split('');
+							this.firstName = arr[0];
+							this.lastName = arr[1];
+						}
+					}
+				}
+				
+			})
+		</script>
+	</body>
+</html>

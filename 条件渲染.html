@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>条件渲染</title>
+		<style>
+			.actived{
+				color: orangered;
+				font-size: 14;
+			}
+			.activedTwo{
+				font-size: 14;
+				color: #0000CD;
+			}
+			input{
+				border: 1px solid #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="app">
+			
+			<!--
+				v-if和v-show: 都可以显示隐藏页面元素	
+						区别: v-show是页面上直接用样式控制，性能比较高，不会频繁的把i一个dom添加及删除
+						     v-if是移除元素，不存在在dom元素上，比较耗性能
+			-->
+			<!-- 第一种方法 -->
+			<div v-if='show' data-test='v-if'>{{message}}</div>
+			<div v-show='show'  data-test='v-show'>{{message}}</div>
+			<!-- 第二种方法 -->
+			<div v-if='show' data-test='v-if'>{{message}}</div>
+			<div v-else>bye world</div>
+			<!-- 第三种方法 -->
+			<div v-if='shows === "a"'> this is a</div>
+			<div v-else-if='shows === "b"'> this is a</div>
+			<div v-else='shows'> this is others</div>
+			
+			<!-- 第四种方法 -->
+					<!-- 
+						vue的运行机制是在页面上尽量复用页面上已经有的相同结构，类似与下边input结构，在show=true的情况下，
+					来回切换前边的文字，但是input框是不发生变化的，但是在input上加上键名:key 就可以解决这个问题，这里key是vue带的，
+					尝试过name属性，input框不发生变化
+					-->
+			<div v-if='show' >
+				用户名：<input type="text" key='1'>
+			</div>
+			<div v-else>
+				邮箱名：<input type="text" key='2'>
+			</div>
+			
+		</div>
+		<script src="./vue.js"></script>
+		<script type="text/javascript">
+		
+			let vm = new Vue({
+				el: "#app",
+				data: {
+					message:'hello world',
+					show:false,
+					shows:'a'
+				}
+			})
+		</script>
+	</body>
+</html>
